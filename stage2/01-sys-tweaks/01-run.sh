@@ -11,11 +11,17 @@ install -m 644 files/console-setup   	"${ROOTFS_DIR}/etc/default/"
 
 install -m 755 files/rc.local		"${ROOTFS_DIR}/etc/"
 
+install -m 644 files/gogs.service	"${ROOTFS_DIR}/etc/systemd/system/"
+
+mkdir -p "${ROOTFS_DIR}/home/git"
+unzip files/gogs_0.11.34.zip -d "${ROOTFS_DIR}/home/git/"
+
 on_chroot << EOF
 systemctl disable hwclock.sh
 systemctl disable nfs-common
 systemctl disable rpcbind
 systemctl enable regenerate_ssh_host_keys
+systemctl enable gogs
 EOF
 
 on_chroot << EOF
@@ -31,6 +37,11 @@ EOF
 on_chroot << EOF
 sed -i 's/^#NTP=$/NTP=leither.cn/' /etc/systemd/timesyncd.conf
 sed -i 's/^#FallbackNTP.*$/FallbackNTP=ntp1.aliyun.com ntp2.aliyun.com ntp3.aliyun.com ntp4.aliyun.com/' /etc/systemd/timesyncd.conf
+EOF
+
+on_chroot << EOF
+useradd -m git
+chown -R git:git /home/git/gogs
 EOF
 
 if [ "${USE_QEMU}" = "1" ]; then
