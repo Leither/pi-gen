@@ -3,3 +3,5 @@
 04-inputrc.diff
 05-path.diff
 07-resize-init.diff
+08-bluetooth-config.diff
+09-bluetoothd.diff

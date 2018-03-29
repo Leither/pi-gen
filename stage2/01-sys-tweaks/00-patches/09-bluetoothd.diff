@@ -1,0 +1,12 @@
+--- stage2.orig/rootfs/lib/systemd/system/bluetooth.service    2017-08-25 18:54:25.593479553 +0800
++++ stage2/rootfs/lib/systemd/system/bluetooth.service 2017-08-25 18:54:38.738946836 +0800
+@@ -6,7 +6,7 @@
+ [Service]
+ Type=dbus
+ BusName=org.bluez
+-ExecStart=/usr/lib/bluetooth/bluetoothd
++ExecStart=/usr/lib/bluetooth/bluetoothd -C --noplugin=sap
+ NotifyAccess=main
+ #WatchdogSec=10
+ #Restart=on-failure
+
