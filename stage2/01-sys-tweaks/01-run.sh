@@ -18,6 +18,10 @@ systemctl disable rpcbind
 systemctl enable regenerate_ssh_host_keys
 EOF
 
+on_chroot << EOF
+pip3 install PyBluez
+EOF
+
 if [ "${USE_QEMU}" = "1" ]; then
 	echo "enter QEMU mode"
 	install -m 644 files/90-qemu.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
