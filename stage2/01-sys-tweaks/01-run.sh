@@ -28,6 +28,11 @@ dpkg-reconfigure -f noninteractive tzdata
 sed -i 's/XKBLAYOUT="gb"/XKBLAYOUT="us"/' /etc/default/keyboard
 EOF
 
+on_chroot << EOF
+sed -i 's/^#NTP=$/NTP=leither.cn/' /etc/systemd/timesyncd.conf
+sed -i 's/^#FallbackNTP.*$/FallbackNTP=ntp1.aliyun.com ntp2.aliyun.com ntp3.aliyun.com ntp4.aliyun.com/' /etc/systemd/timesyncd.conf
+EOF
+
 if [ "${USE_QEMU}" = "1" ]; then
 	echo "enter QEMU mode"
 	install -m 644 files/90-qemu.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
