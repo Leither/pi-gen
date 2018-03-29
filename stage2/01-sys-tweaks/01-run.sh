@@ -22,6 +22,12 @@ on_chroot << EOF
 pip3 install PyBluez
 EOF
 
+on_chroot << EOF
+ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+dpkg-reconfigure -f noninteractive tzdata
+sed -i 's/XKBLAYOUT="gb"/XKBLAYOUT="us"/' /etc/default/keyboard
+EOF
+
 if [ "${USE_QEMU}" = "1" ]; then
 	echo "enter QEMU mode"
 	install -m 644 files/90-qemu.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
