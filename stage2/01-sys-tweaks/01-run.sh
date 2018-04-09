@@ -41,7 +41,7 @@ EOF
 
 on_chroot << EOF
 useradd -m git
-chown -R git:git /home/git/gogs
+chown -R git:git /home/git
 EOF
 
 if [ "${USE_QEMU}" = "1" ]; then
