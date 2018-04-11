@@ -25,3 +25,4 @@ policykit-1
 libbluetooth-dev
 bluez-hcidump
 python3-pip
+libpcap-dev
